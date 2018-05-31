@@ -26,8 +26,9 @@ main <- function()
     sts <- read_json( "input/settings.json", simplifyVector=TRUE )
     
     ## Load the data and reduce to the requested set of markers
-    cat( "Loading CyCIF data from", sts$data, "\n" )
-    Xraw <- read_csv( sts$data, col_types=cols() )
+    fnIn <- str_c("input/", sts$data)
+    cat( "Loading CyCIF data from", fnIn, "\n" )
+    Xraw <- read_csv( fnIn, col_types=cols() )
     cat( "  Parsed", nrow(Xraw), "points across", ncol(Xraw), "columns\n" )
 
     ## Check that all the markers are present
