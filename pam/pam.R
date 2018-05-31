@@ -2,7 +2,9 @@
 ##
 ## by Artem Sokolov
 
-library( tidyverse )
+library( readr )
+suppressMessages(library( dplyr ))
+library( stringr )
 library( jsonlite )
 
 ## Clamps qq^th quantile to -1 and (1-qq)^th quantile to 1
@@ -67,3 +69,5 @@ main <- function()
     cat( "Storing results to", fnOut, "\n" )
     Res %>% write_csv( fnOut )
 }
+
+main()
