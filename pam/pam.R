@@ -64,11 +64,18 @@ main <- function()
         select(-rowIndex) %>% select( Cluster:Silhouette, everything() )
     cat( "Average Silhouette Score:", mean(Res$Silhouette), "\n" )
 
-    ## Compose the output filename and save the output
-    fnOut <- tools::file_path_sans_ext(sts$data) %>% basename %>%
-        str_c( "output/", ., "-pam", sts$k, ".csv" )
-    cat( "Storing results to", fnOut, "\n" )
-    Res %>% write_csv( fnOut )
+    ## Compose the output filenames and save the outputs
+    pfx <- tools::file_path_sans_ext(sts$data) %>% basename %>%
+        str_c( "output/", ., "-pam", sts$k )
+    fnCSV <- str_c( pfx, ".csv" )
+    cat( "Storing results to", fnCSV, "\n" )
+    Res %>% write_csv( fnCSV )
+
+    ## Write out a silhouette plot to a .pdf
+    fnPDF <- str_c( pfx, ".pdf" )
+    pdf( fnPDF )
+    plot( sl )
+    invisible(dev.off())
 }
 
 main()
