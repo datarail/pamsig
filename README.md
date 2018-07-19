@@ -1,4 +1,4 @@
-# cscwg: Cell State Calling Working Group
+# pamsig: A simple k-medoids clustering method for CyCIF data
 
 The repository hosts source code for Docker containers used for making cell state calls on segmented CyCIF data:
 
