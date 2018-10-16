@@ -60,6 +60,17 @@ main <- function()
     ##   b) quantile normalization of each channel
     cat( "Applying log transform and quantile normalization...\n" )
     X <- Xsub %>% mutate_all( ~log10(. + 1) ) %>% mutate_all( ~quantnorm(.x) )
+
+    ## cluster::pam() has a limit on the number of points it can handle
+    ## Randomly subsample the data if above this limit
+    pamLimit <- 65536
+    if( nrow(X) > pamLimit )
+    {
+        cat( "cluster::pam() has a limit on the number of points it can process\n" )
+        cat( "  Randomly subsampling to", pamLimit,"points to be within this limit\n" )
+        i <- sample(1:nrow(X), pamLimit)
+        X <- X[i,]
+    }
     
     ## Apply k-medoids
     cat( "Applying k-medoids with k =", sts$k, "...\n" )
