@@ -111,7 +111,7 @@ main <- function()
     M <- R %>% mutate( Cluster = str_c("Cluster", Cluster) ) %>% as.data.frame %>%
         tibble::column_to_rownames("Cluster") %>% as.matrix
     fnSigPDF <- str_c( pfx, "-sig.pdf" )
-    pheatmap( M, cluster_rows=FALSE, filename=fnSigPDF, width=7, height=nC*0.25+2, silent=FALSE )
+    pheatmap( M, cluster_rows=FALSE, filename=fnSigPDF, width=7, height=nC*0.5+2, silent=FALSE )
 }
 
 main()
