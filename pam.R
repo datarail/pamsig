@@ -5,9 +5,7 @@
 library( readr )
 suppressMessages(library( dplyr ))
 library( stringr )
-library( yaml )
 library( purrr )
-library( pheatmap )
 
 ## Clamps qq^th quantile to -1 and (1-qq)^th quantile to 1
 quantnorm <- function( v, qq = 0.001 )
@@ -34,7 +32,7 @@ main <- function()
     
     ## Load the settings
     cat( "Reading settings from config/pamsig.yml\n" )
-    sts <- read_yaml( "config/pamsig.yml" )
+    sts <- yaml::read_yaml( "config/pamsig.yml" )
     
     ## Load the data and reduce to the requested set of markers
     fnIn <- str_c("input/", sts$data)
@@ -111,7 +109,8 @@ main <- function()
     M <- R %>% mutate( Cluster = str_c("Cluster", Cluster) ) %>% as.data.frame %>%
         tibble::column_to_rownames("Cluster") %>% as.matrix
     fnSigPDF <- str_c( pfx, "-sig.pdf" )
-    pheatmap( M, cluster_rows=FALSE, filename=fnSigPDF, width=7, height=nC*0.25+2, silent=FALSE )
+    pheatmap::pheatmap( M, cluster_rows=FALSE, filename=fnSigPDF,
+                       width=7, height=nC*0.5+2, silent=FALSE )
 }
 
 main()
